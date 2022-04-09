@@ -1,0 +1,191 @@
+openapi: 3.0.1
+info:
+  title: EDEM BlackJack Client
+  description: EDEM BlackJack Client
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: pono@gft.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: https://localhost/swagger-ui
+- url: http://localhost/swagger-ui
+tags:
+- name: BlackJack
+  description: All actions related to The Client
+paths:
+  /alive:
+    get:
+      tags:
+      - BlackJack
+      summary: I am alive
+      description: I am alive
+      operationId: alive
+      responses:
+        '200':
+          description: I am here
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: swagger_client.controllers.client_controller
+  /card:
+    get:
+      tags:
+      - BlackJack
+      summary: Do you want a card?
+      description: Do you want a card? 200 Yes / 201 No / Message your bet
+      operationId: card
+      responses:
+        '200':
+          description: I am here
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: swagger_client.controllers.client_controller
+  /onboarding:
+    post:
+      tags:
+      - BlackJack
+      summary: onboarding
+      description: Next Card
+      operationId: onboarding
+      requestBody:
+        description: User to add to the game
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: swagger_client.controllers.client_controller
+  /getcard:
+    post:
+      tags:
+      - BlackJack
+      summary: Get a Card
+      description: Receive the next card
+      operationId: getcard
+      requestBody:
+        description: Card received
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Card'
+      responses:
+        '200':
+          description: All ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: swagger_client.controllers.client_controller
+  /result:
+    post:
+      tags:
+      - BlackJack
+      summary: Result of the game
+      description: Receive the result of your bet
+      operationId: result
+      requestBody:
+        description: Result of the game
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '200':
+          description: All ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: swagger_client.controllers.client_controller
+components:
+  schemas:
+    User:
+      type: object
+      required:
+      - "name"
+      - "image"
+      - "ip"
+      - "host"
+      properties:
+        name:
+          type: "string"
+        image:
+          type: "string"
+        ip:
+          type: "string"
+        host:
+          type: "string"
+    Message:
+      type: object
+      required:
+      - "code"
+      - "message"
+      properties:
+        code:
+          type: "string"
+        message:
+          type: "string"
+    Card:
+      type: object
+      required:
+      - "code"
+      - "message"
+      properties:
+        code:
+          type: "string"
+        message:
+          type: "string"
+

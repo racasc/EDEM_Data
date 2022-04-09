@@ -1,0 +1,40 @@
+pi
+0123456789
+
+equipo 2
+
+import RPi.GPIO as GPIO
+import time
+import adafruit_dht
+import board
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(21, GPIO.OUT)
+
+for i in range (0,3):
+    GPIO.output(13, GPIO.IN)
+    time.sleep(5)
+    GPIO.output(13, GPIO.OUT)
+    time.sleep(5)
+    GPIO.output(21, GPIO.IN)
+    time.sleep(5)
+    GPIO.output(21, GPIO.OUT)
+    time.sleep(5)
+
+dht = adafruit_dht.DHT11(board.D4)
+
+while True:
+    try:
+        temperature = dht.temperature
+        humidity = dht.humidity
+        # Print what we got to the REPL
+        print("Temp: {:.1f} *C \t Humidity: {}%".format(temperature, humidity))
+        
+    if (temperature < 25):
+        GPIO.output(21, GPIO.HIGH), GPIO.output(13, GPIO.LOW)
+    else:
+        GPIO.output(21, GPIO.LOW), GPIO.output(13, GPIO.HIGH)
+    time.sleep(1)
+    except RuntimeError as e:
+        # Reading doesn't always work! Just print error and we'll try again
+        print("Reading from DHT failure: ", e.args)
