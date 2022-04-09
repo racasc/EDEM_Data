@@ -1,0 +1,34 @@
+
+mkdir postgres-docker && cd postgres-docker
+
+docker exec -it 3id bin/bash
+
+psql -U root -d metaverso
+
+
+CREATE TABLE raw_data (
+	id INT PRIMARY KEY,
+	name VARCHAR ( 50 ),
+    last_name VARCHAR ( 50 ),
+    f1 INT,
+    f2 INT,
+    f3 INT,
+    f4 INT,
+    f5 INT,
+    f6 INT,
+    f7 INT,
+    f8 INT,
+    f9 INT,
+    f10 INT,
+    lat FLOAT,
+    lon FLOAT,
+    transport VARCHAR ( 50 ),
+    age INT,
+    gender VARCHAR ( 5 ),
+    weight FLOAT,
+    height FLOAT,
+	time TIMESTAMP NOT NULL
+);
+
+EJEMPLO DOS ELEMENTOS DICCIONARIO RAW DATA
+dc = {'414-49-8287':{'id': '414-49-8287', 'name': 'Delia', 'last_name': 'Alcalde', 'friends': ['561-50-6154', '067-27-6851', '847-52-6358', '527-06-3194', '067-27-6851', '609-20-5785', '505-99-2240', '585-00-6625', '657-27-8937'], 'position': {'lat': 39.41503421978921, 'lon': -0.35928548853919895}, 'transport': 'Walking', 'age': 40.545257363891665, 'gender': 'man', 'weight': 86.79077864371784, 'height': 207.17907819386426, 'bodyfat': 17.69793607274331, 'time': '2022-01-26 09:33:37.732243'}, '373-45-2501': {'id': '373-45-2501', 'name': 'Delfina', 'last_name': 'Ponce', 'friends': ['067-27-6851', '392-78-6610', '023-33-8748', '437-25-5500', '609-20-5785', '739-06-0162', '585-00-6625', '956-59-3996', '561-50-6154'], 'position': {'lat': 39.4603145892678, 'lon': -0.388426998020616}, 'transport': 'Bike', 'age': 27.20599554998097, 'gender': 'woman', 'weight': 80.74451146828902, 'height': 205.81421460273404, 'bodyfat': 29.32237982550831, 'time': '2022-01-26 09:33:37.732243'}

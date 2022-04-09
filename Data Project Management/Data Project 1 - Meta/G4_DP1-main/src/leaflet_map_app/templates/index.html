@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Active users</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.css"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<div id="map"></div>
+
+<script src="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.js">
+</script>
+
+<script>
+
+    var map = L.map('map').setView([39.46975, -0.37739], 13);
+    mapLink =
+        '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; ' + mapLink + ' Contributors',
+        maxZoom: 18,
+    }).addTo(map);
+
+    L.Control.Watermark = L.Control.extend({
+        onAdd: function (map) {
+            var img = L.DomUtil.create('img');
+
+            img.src = 'https://github.com/Enriquebadenas/G4_DP1/blob/main/images/white_logo.png?raw=true';
+            img.style.width = '300px';
+
+            return img;
+        },
+
+        onRemove: function (map) {
+            // Nothing to do here
+        }
+    });
+    L.control.watermark = function (opts) {
+        return new L.Control.Watermark(opts);
+    }
+    L.control.watermark({position: 'topright'}).addTo(map);
+
+    var markersLayer = new L.LayerGroup(); // NOTE: Layer is created here!
+    var source = new EventSource('/topic/generator');
+    source.addEventListener('message', function (e) {
+
+        markersLayer.clearLayers();
+        console.log('LLEGA EVENTO:')
+        obj = JSON.parse(e.data);
+        for (var key in obj) {
+            aux = obj[key]
+            lat = aux["position"]["lat"];
+            long = aux["position"]["lon"];
+            marker = L.marker([lat, long],) //.addTo(map)
+            markersLayer.addLayer(marker);
+        }
+        markersLayer.addTo(map);
+    }, false);
+</script>
+</body>
+</html>
